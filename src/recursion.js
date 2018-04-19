@@ -249,15 +249,15 @@ var buildList = function(value, length) {
 // fizzBuzz(5) // ['1','2','Fizz','4','Buzz']
 var fizzBuzz = function(n) {
   if (n === 1) {
-    return [1];
+    return ['1'];
   } else if (n % 3 === 0 && n % 5 === 0) {
-    return ['Fizzbuzz'].concat(fizzBuzz(n - 1));
+    return fizzBuzz(n - 1).concat(['FizzBuzz']);
   } else if (n % 3 === 0) {
-    return ['Fizz'].concat(fizzBuzz(n - 1));
+    return fizzBuzz(n - 1).concat(['Fizz']);
   } else if (n % 5 === 0) {
-    return ['Buzz'].concat(fizzBuzz(n - 1));
+    return fizzBuzz(n - 1).concat(['Buzz']);
   }
-  return [n].concat(fizzBuzz(n - 1)).reverse();
+  return fizzBuzz(n - 1).concat([String(n)]);
 };
 
 // 20. Count the occurence of a value in a list.
