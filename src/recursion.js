@@ -295,7 +295,7 @@ var replaceKeysInObj = function(obj, oldKey, newKey) {
 // Example: 0, 1, 1, 2, 3, 5, 8, 13, 21, 34.....
 // fibonacci(5); // [0,1,1,2,3,5]
 // Note: The 0 is not counted.
-var fibonacci = function(n, a = 1, b = 0) {
+var fibonacci = function(n) {
   
 };
 
@@ -321,7 +321,7 @@ var capitalizeWords = function(array) {
 // capitalizeFirst(['car','poop','banana']); // ['Car','Poop','Banana']
 var capitalizeFirst = function(array) {
   let firstLetUpp = array[0].substring(0, 1).toUpperCase();
-  let firstStrPsc = firstLetToUpp + array[0].substring(1);
+  let firstStrPsc = firstLetUpp + array[0].substring(1);
   if (array.length === 1) {
     return [firstStrPsc];
   }
@@ -412,13 +412,13 @@ var numToText = function(str) {
     '8': 'eight',
     '9': 'nine'
   }
+  if (objDigitStr.hasOwnProperty(strArr[0])) {
+    strArr[0] = objDigitStr[strArr[0]];
+  }
   if (strArr.length === 1) {
-    if (objDigitStr.hasOwnProperty(strArr[0])) {
-      return obj[strArr[0]];
-    }
     return strArr[0];
   }
-  return strArr.slice(1).join(' ');
+  return strArr[0] + ' ' + numToText(strArr.slice(1).join(' '));
 };
 
 
