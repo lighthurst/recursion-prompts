@@ -236,7 +236,9 @@ var buildList = function(value, length) {
   if (length === 1) {
       return [value];
   }
-  return [value].concat(buildList(value, length - 1));
+  let arr = buildList(value, length - 1);
+  arr.unshift(value);
+  return arr;
 };
 
 // 19. Implement FizzBuzz. Given integer n, return an array of the string representations of 1 to n.
