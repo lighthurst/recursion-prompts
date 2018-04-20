@@ -123,13 +123,6 @@ var powerOfTwo = function(n) {
 
 // 9. Write a function that reverses a string.
 var reverse = function(string) {
-  // var acc = [];
-  // var l = string.length;
-  // if (string.length === 1) {
-  //   return string;
-  // }
-  // acc.push(string.charAt(l -1));
-  // return acc = acc.concat(reverse(string.substring(0, l - 1))).join('');
   const l = string.length;
   if (l === 1) {
     return string;
@@ -219,9 +212,11 @@ var compareStr = function(str1, str2) {
 // occupies an index of the array.
 var createArray = function(str) {
   if (str.length === 1) {
-    return [str[0]];
+    return [str.charAt(0)];
   }
-  return [str[0]].concat(createArray(str.slice(1)));
+  let strArr = createArray(str.slice(1));
+  strArr.unshift(str.charAt(0));
+  return strArr;
 };
 
 // 17. Reverse the order of an array
