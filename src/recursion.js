@@ -347,7 +347,9 @@ var capitalizeFirst = function(array) {
   if (array.length === 1) {
     return [firstStrPsc];
   }
-  return [firstStrPsc].concat(capitalizeFirst(array.slice(1)));
+  let strArr = capitalizeFirst(array.slice(1));
+  strArr.unshift(firstStrPsc);
+  return strArr;
 };
 
 // 29. Return the sum of all even numbers in an object containing nested objects.
