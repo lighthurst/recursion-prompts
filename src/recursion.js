@@ -334,7 +334,9 @@ var capitalizeWords = function(array) {
   if (array.length === 1) {
     return [array[0].toUpperCase()];
   }
-  return [array[0].toUpperCase()].concat(capitalizeWords(array.slice(1)));
+  let arr = capitalizeWords(array.slice(1));
+  arr.unshift(array[0].toUpperCase());
+  return arr;
 };
 
 // 28. Given an array of strings, capitalize the first letter of each index.
