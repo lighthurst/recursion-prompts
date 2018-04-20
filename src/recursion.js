@@ -115,7 +115,7 @@ var powerOfTwo = function(n) {
   if (n === 1 || n === -1) {
     return true;
   }
-  if (n < 1 &&  n > -1) {
+  if (n < 1 && n > -1) {
     return false;
   }
   return powerOfTwo(n / 2);
@@ -123,25 +123,25 @@ var powerOfTwo = function(n) {
 
 // 9. Write a function that reverses a string.
 var reverse = function(string) {
-  const l = string.length;
-  if (l === 1) {
+  const lg = string.length;
+  if (lg === 1) {
     return string;
   }
-  return string.charAt(l - 1) + reverse(string.substring(0, l - 1));
+  return string.charAt(lg - 1) + reverse(string.substring(0, lg - 1));
 };
 
 // 10. Write a function that determines if a string is a palindrome.
 var palindrome = function(string) {
   const str = string.toLowerCase();
-  const l = string.length;
-  if (l === 1) {
+  const lg = string.length;
+  if (lg === 1) {
       return true;
   }
-  if (l === 2) {
+  if (lg === 2) {
       return str.charAt(0) === str.charAt(1);
   }
-  if (str.charAt(0) === str.charAt(l - 1)) {
-      return palindrome(str.substring(1, l - 1));
+  if (str.charAt(0) === str.charAt(lg - 1)) {
+      return palindrome(str.substring(1, lg - 1));
   }
   return false;
 };
