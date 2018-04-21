@@ -132,13 +132,10 @@ var reverse = function(string) {
 
 // 10. Write a function that determines if a string is a palindrome.
 var palindrome = function(string) {
-  const str = string.toLowerCase();
-  const lg = string.length;
-  if (lg === 1) {
+  const str = string.split(' ').join('').toLowerCase();
+  const lg = str.length;
+  if (lg === 0 || lg === 1 ) {
       return true;
-  }
-  if (lg === 2) {
-      return str.charAt(0) === str.charAt(1);
   }
   if (str.charAt(0) === str.charAt(lg - 1)) {
       return palindrome(str.substring(1, lg - 1));
@@ -152,8 +149,17 @@ var palindrome = function(string) {
 // modulo(17,5) // 2
 // modulo(22,6) // 4
 var modulo = function(x, y) {
-  if (x - y < y) {
-    return x - y;
+  if (y === 0) {
+    return NaN;
+  }
+  if (x < 0) {
+    return -modulo(-x,  y);
+  }
+  if (y < 0) {
+    return  modulo( x, -y);
+  }
+  if (x < y) {
+    return x;
   }
   return modulo(x - y, y);
 };
@@ -162,9 +168,9 @@ var modulo = function(x, y) {
 // Math methods.
 var multiply = function(x, y) {
   if (y === 0) {
-      return 0;
+    return 0;
   } else if (y < 0) {
-      return -x + (multiply(-x, (-y) - 1));
+    return -x + (multiply(-x, (-y) - 1));
   }
   return x + multiply(x, y - 1);
 };
@@ -172,21 +178,28 @@ var multiply = function(x, y) {
 // 13. Write a function that divides two numbers without using the / operator or
 // Math methods.
 var divide = function(x, y) {
-  if (x === 0) {
-    if (y === 0) {
-      return NaN;
-    }
-    return 0;
-  } else if (x < 0) {
-    if (y < 0) {
-      if (x - y === 0) {
-        return 1;
-      } else if (x < y) {
-        return 0;
-      }
-    return 1 + divide(x - y, y);
-    }
+  var mixedSign = false;
+  if (y === 0) {
+    return NaN;
   }
+  if (x < 0 && y < 0) {
+    x = -x;
+    y = -y;
+  }
+  if (x < 0 || y < 0) {
+    if (x < 0) {
+      x = -x;
+    }
+    y = -y;
+    mixedSign = true;
+  }
+  if (x === y) {
+    return 1;
+  }
+  if (x < y) {
+    return 0;
+  }
+  return mixedSign ? - (1 + divide(x - y, y)) : (1 + divide(x - y, y));
 };
 
 // 14. Find the greatest common divisor (gcd) of two positive numbers. The GCD of two
@@ -195,6 +208,16 @@ var divide = function(x, y) {
 // http://www.cse.wustl.edu/~kjg/cse131/Notes/Recursion/recursion.html
 // https://www.khanacademy.org/computing/computer-science/cryptography/modarithmetic/a/the-euclidean-algorithm
 var gcd = function(x, y) {
+  if (x < 0 || y < 0) {
+    return null;
+  }
+  if (x === 0) {
+    return y;
+  }
+  if (y === 0) {
+    return x;
+  }
+  return gcd(y, x % y);
 };
 
 // 15. Write a function that compares each character of two strings and returns true if
@@ -234,7 +257,7 @@ var reverseArr = function(array) {
 // buildList(7,3) // [7,7,7]
 var buildList = function(value, length) {
   if (length === 1) {
-      return [value];
+    return [value];
   }
   let arr = buildList(value, length - 1);
   arr.unshift(value);
@@ -267,11 +290,21 @@ var fizzBuzz = function(n) {
 // countOccurrence([2,7,4,4,1,4], 4) // 3
 // countOccurrence([2,'banana',4,4,1,'banana'], 'banana') // 2
 var countOccurrence = function(array, value) {
+  if (array.length === 0) {
+    return 0;
+  }
+  return (value === array[0] ? 1: 0) + countOccurrence(array.slice(1), value);
 };
 
 // 21. Write a recursive version of map.
 // rMap([1,2,3], timesTwo); // [2,4,6]
 var rMap = function(array, callback) {
+  if (array.length === 1) {
+    return [callback(array[0])];
+  }
+  let result = rMap(array.slice(1), callback);
+  result.unshift(callback(array[0]));
+  return result;
 };
 
 // 22. Write a function that counts the number of times a key occurs in an object.
@@ -279,6 +312,16 @@ var rMap = function(array, callback) {
 // countKeysInObj(obj, 'r') // 1
 // countKeysInObj(obj, 'e') // 2
 var countKeysInObj = function(obj, key) {
+  var count = 0;
+  for (var prop in obj) {
+    if (prop === key) {
+      count++;
+    }
+    if (typeof obj[prop] !== 'string') {
+      count += countKeysInObj(obj[prop], key);
+    }
+  }
+  return count;
 };
 
 // 23. Write a function that counts the number of times a value occurs in an object.
@@ -286,11 +329,31 @@ var countKeysInObj = function(obj, key) {
 // countValuesInObj(obj, 'r') // 2
 // countValuesInObj(obj, 'e') // 1
 var countValuesInObj = function(obj, value) {
+  var count = 0;
+  for (var key in obj) {
+    if (obj[key] === value) {
+      count++;
+    }
+    if (typeof obj[key] !== 'string') {
+      count += countValuesInObj(obj[key], value);
+    }
+  }
+  return count;
 };
 
 // 24. Find all keys in an object (and nested objects) by a provided name and rename
 // them to a provided new name while preserving the value stored at that key.
 var replaceKeysInObj = function(obj, oldKey, newKey) {
+  for (var key in obj) {
+    if (obj.hasOwnProperty(oldKey)) {
+      obj[newKey] = obj[oldKey];
+      delete obj[oldKey];
+    }
+    if (typeof obj[key] !== 'string') {
+      replaceKeysInObj(obj[key], oldKey, newKey);
+    }
+  }
+  return obj;
 };
 
 // 25. Get the first n Fibonacci numbers. In the Fibonacci sequence, each subsequent
