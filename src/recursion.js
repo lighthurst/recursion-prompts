@@ -199,7 +199,8 @@ var divide = function(x, y) {
   if (x < y) {
     return 0;
   }
-  return mixedSign ? - (1 + divide(x - y, y)) : (1 + divide(x - y, y));
+  var posResult = 1 + divide(x - y, y);
+  return mixedSign ? (-posResult) : posResult;
 };
 
 // 14. Find the greatest common divisor (gcd) of two positive numbers. The GCD of two
