@@ -132,7 +132,7 @@ var reverse = function(string) {
 
 // 10. Write a function that determines if a string is a palindrome.
 var palindrome = function(string) {
-  const str = string.split(' ').join('').toLowerCase();
+  const str = string.toLowerCase().replace(/[^a-z0-9]/g, '');
   const lg = str.length;
   if (lg === 0 || lg === 1 ) {
       return true;
@@ -489,6 +489,7 @@ var augmentElements = function(array, aug) {
 // minimizeZeroes([2,0,0,0,1,4]) // [2,0,1,4]
 // minimizeZeroes([2,0,0,0,1,0,0,4]) // [2,0,1,0,4]
 var minimizeZeroes = function(array) {
+
 };
 
 // 35. Alternate the numbers in an array between positive and negative regardless of
