@@ -178,19 +178,15 @@ var multiply = function(x, y) {
 // 13. Write a function that divides two numbers without using the / operator or
 // Math methods.
 var divide = function(x, y) {
-  var mixedSign = false;
+  let mixedSign = false;
   if (y === 0) {
     return NaN;
   }
   if (x < 0 && y < 0) {
-    x = -x;
-    y = -y;
+    [x, y] = [-x, -y];
   }
   if (x < 0 || y < 0) {
-    if (x < 0) {
-      x = -x;
-    }
-    y = -y;
+    x < 0 ? x = -x : y = -y;
     mixedSign = true;
   }
   if (x === y) {
@@ -199,8 +195,8 @@ var divide = function(x, y) {
   if (x < y) {
     return 0;
   }
-  var posResult = 1 + divide(x - y, y);
-  return mixedSign ? (-posResult) : posResult;
+  let posResult = 1 + divide(x - y, y);
+  return mixedSign ? -posResult : posResult;
 };
 
 // 14. Find the greatest common divisor (gcd) of two positive numbers. The GCD of two
