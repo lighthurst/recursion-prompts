@@ -468,7 +468,14 @@ var letterTally = function(str, obj) {
 // compress([1,2,2,3,4,4,5,5,5]) // [1,2,3,4,5]
 // compress([1,2,2,3,4,4,2,5,5,5,4,4]) // [1,2,3,4,2,5,4]
 var compress = function(list) {
-
+  if (list.length === 1) {
+    return list;
+  }
+  let resultArr = compress(list.slice(1));
+  if (list[0] !== resultArr[0]) {
+    resultArr.unshift(list[0]);
+  }
+  return resultArr;
 };
 
 // 33. Augument every element in a list with a new value where each element is an array
@@ -489,6 +496,15 @@ var augmentElements = function(array, aug) {
 // minimizeZeroes([2,0,0,0,1,4]) // [2,0,1,4]
 // minimizeZeroes([2,0,0,0,1,0,0,4]) // [2,0,1,0,4]
 var minimizeZeroes = function(array) {
+  if (array.length === 1) {
+    return array;
+  }
+  let resultArr = minimizeZeroes(array.slice(1));
+  if (array[0] === 0 && resultArr[0] === 0) {
+    return resultArr;
+  }
+  resultArr.unshift(array[0]);
+  return resultArr;
 
 };
 
